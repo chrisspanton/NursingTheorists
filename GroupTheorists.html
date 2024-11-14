@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nursing Application - Developmental Theories</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            background-color: #eef2f7;
+            color: #333;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin-bottom: 24px;
+            text-align: center;
+            color: #2c3e50;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            background-color: #3498db;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #result {
+            margin-top: 24px;
+        }
+        .theory-section {
+            margin-bottom: 32px;
+        }
+        .theory-section h2 {
+            color: #2c3e50;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 8px;
+        }
+        .theory-section p {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .virtue, .virtue span {
+            font-weight: bold;
+            color: #16a085;
+        }
+        .stage-title {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Nursing Application - Developmental Theories</h1>
+    <label for="ageInput">Enter an age between 0 and 100:</label>
+    <input type="number" id="ageInput" min="0" max="100" value="0">
+    <button onclick="getData()">Submit</button>
+    <div id="result"></div>
+</div>
+
+<script>
+    const data = {
+        "Erikson": [
+            {
+                "stage": "Infancy",
+                "age_range": [0, 1],
+                "crisis": "Trust vs. Mistrust",
+                "virtue": "Hope",
+                "description": "Infants learn to trust caregivers to meet their basic needs. Consistent and reliable care leads to a sense of trust, while inconsistency may result in mistrust."
+            },
+            {
+                "stage": "Early Childhood",
+                "age_range": [2, 3],
+                "crisis": "Autonomy vs. Shame and Doubt",
+                "virtue": "Will",
+                "description": "Children develop a sense of personal control and autonomy over physical skills and a sense of independence. Encouragement fosters autonomy, while overly critical or restrictive parenting may lead to shame and doubt."
+            },
+            {
+                "stage": "Preschool",
+                "age_range": [4, 5],
+                "crisis": "Initiative vs. Guilt",
+                "virtue": "Purpose",
+                "description": "Children begin to assert power and control over their environment through directing play and social interactions. Successfully initiating activities leads to a sense of purpose, whereas failure may result in guilt."
+            },
+            {
+                "stage": "School Age",
+                "age_range": [6, 11],
+                "crisis": "Industry vs. Inferiority",
+                "virtue": "Competency",
+                "description": "Children develop a sense of pride in their accomplishments and abilities through social interactions and academic achievements. Encouragement and successful experiences foster industry, while repeated failures or lack of support may lead to feelings of inferiority."
+            },
+            {
+                "stage": "Adolescence",
+                "age_range": [12, 18],
+                "crisis": "Identity vs. Role Confusion",
+                "virtue": "Fidelity",
+                "description": "Teens explore their personal identity, values, and beliefs, striving to establish a sense of self. Successful resolution leads to a strong identity and fidelity, while confusion can result in uncertainty about one's place in the world."
+            },
+            {
+                "stage": "Young Adulthood",
+                "age_range": [19, 40],
+                "crisis": "Intimacy vs. Isolation",
+                "virtue": "Love",
+                "description": "Young adults seek to form deep, meaningful relationships and establish intimate connections. Successful relationships lead to the virtue of love, whereas failure to connect may result in feelings of isolation."
+            },
+            {
+                "stage": "Middle Adulthood",
+                "age_range": [41, 65],
+                "crisis": "Generativity vs. Stagnation",
+                "virtue": "Care",
+                "description": "Adults strive to create or nurture things that will outlast them, often through parenting, career achievements, or community involvement. Success leads to a sense of generativity and care, while failure may result in stagnation and a lack of purpose."
+            },
+            {
+                "stage": "Maturity",
+                "age_range": [66, 100],
+                "crisis": "Ego Integrity vs. Despair",
+                "virtue": "Wisdom",
+                "description": "Older adults reflect on their lives, contemplating their accomplishments and relationships. Achieving a sense of fulfillment leads to ego integrity and wisdom, whereas regrets and unresolved conflicts may result in despair."
+            }
+        ],
+        "Piaget": [
+            {
+                "stage": "Sensorimotor",
+                "age_range": [0, 2],
+                "description": "Infants learn about the world through their senses and actions. Object permanence develops."
+            },
+            {
+                "stage": "Preoperational",
+                "age_range": [2, 7],
+                "description": "Children begin to think symbolically but lack logical reasoning. Egocentrism is prominent."
+            },
+            {
+                "stage": "Concrete Operational",
+                "age_range": [7, 11],
+                "description": "Children begin thinking logically about concrete events. Understand the concept of conservation."
+            },
+            {
+                "stage": "Formal Operational",
+                "age_range": [12, 100],
+                "description": "Development of abstract reasoning and hypothetical thinking."
+            }
+        ],
+        "Havighurst": [
+            {
+                "stage": "Infancy and Early Childhood",
+                "age_range": [0, 5],
+                "tasks": [
+                    "Learning to walk",
+                    "Learning to take solid foods",
+                    "Learning to talk",
+                    "Learning to control the elimination of body wastes",
+                    "Learning sex differences and sexual modesty",
+                    "Forming concepts and learning language",
+                    "Getting ready to read"
+                ]
+            },
+            {
+                "stage": "Middle Childhood",
+                "age_range": [6, 12],
+                "tasks": [
+                    "Learning physical skills necessary for games",
+                    "Building wholesome attitudes toward oneself",
+                    "Learning to get along with peers",
+                    "Developing fundamental skills in reading, writing, and mathematics",
+                    "Developing concepts for everyday living",
+                    "Developing conscience and values",
+                    "Achieving personal independence"
+                ]
+            },
+            {
+                "stage": "Adolescence",
+                "age_range": [13, 18],
+                "tasks": [
+                    "Achieving new and mature relations with peers",
+                    "Achieving a masculine or feminine social role",
+                    "Accepting one's physique",
+                    "Achieving emotional independence from parents",
+                    "Preparing for marriage and family life",
+                    "Preparing for an economic career",
+                    "Acquiring values and an ethical system",
+                    "Desiring and achieving socially responsible behavior"
+                ]
+            },
+            {
+                "stage": "Early Adulthood",
+                "age_range": [19, 30],
+                "tasks": [
+                    "Selecting a mate",
+                    "Learning to live with a partner",
+                    "Starting a family",
+                    "Rearing children",
+                    "Managing a home",
+                    "Establishing a career",
+                    "Assuming civic responsibility",
+                    "Finding a congenial social group"
+                ]
+            },
+            {
+                "stage": "Middle Age",
+                "age_range": [31, 60],
+                "tasks": [
+                    "Achieving adult civic and social responsibility",
+                    "Establishing and maintaining an economic standard of living",
+                    "Assisting teenage children to become responsible adults",
+                    "Developing adult leisure-time activities",
+                    "Relating to one's spouse as a person",
+                    "Accepting physiological changes",
+                    "Adjusting to aging parents"
+                ]
+            },
+            {
+                "stage": "Later Maturity",
+                "age_range": [61, 100],
+                "tasks": [
+                    "Adjusting to decreasing physical strength and health",
+                    "Adjusting to retirement and reduced income",
+                    "Adjusting to death of a spouse",
+                    "Establishing an explicit affiliation with one's age group",
+                    "Meeting social and civic obligations",
+                    "Establishing satisfactory physical living arrangements"
+                ]
+            }
+        ],
+        "Kohlberg": [
+            {
+                "level": "Pre-Conventional",
+                "stage": "Stage 1: Obedience and Punishment Orientation",
+                "age_range": [0, 9],
+                "description": "Morality is externally controlled. Children obey rules to avoid punishment."
+            },
+            {
+                "level": "Pre-Conventional",
+                "stage": "Stage 2: Individualism and Exchange",
+                "age_range": [0, 9],
+                "description": "Children recognize that others have different interests; actions are judged based on how they serve individual needs."
+            },
+            {
+                "level": "Conventional",
+                "stage": "Stage 3: Good Interpersonal Relationships",
+                "age_range": [10, 15],
+                "description": "Behavior is driven by social approval; emphasis on being 'nice' and maintaining relationships."
+            },
+            {
+                "level": "Conventional",
+                "stage": "Stage 4: Maintaining Social Order",
+                "age_range": [10, 15],
+                "description": "Emphasis on obeying laws, respecting authority, and maintaining social order."
+            },
+            {
+                "level": "Post-Conventional",
+                "stage": "Stage 5: Social Contract and Individual Rights",
+                "age_range": [16, 100],
+                "description": "Understanding that laws are relative and may be changed; focus on greatest good for the greatest number."
+            },
+            {
+                "level": "Post-Conventional",
+                "stage": "Stage 6: Universal Principles",
+                "age_range": [16, 100],
+                "description": "Morality is based on abstract reasoning using universal ethical principles; laws are valid only if they are grounded in justice."
+            }
+        ],
+        "Freud": [
+            {
+                "stage": "Oral",
+                "age_range": [0, 1],
+                "description": "Infants derive pleasure from oral activities such as sucking and eating."
+            },
+            {
+                "stage": "Anal",
+                "age_range": [1, 3],
+                "description": "Focus on controlling bladder and bowel movements; development of a sense of accomplishment and independence."
+            },
+            {
+                "stage": "Phallic",
+                "age_range": [3, 6],
+                "description": "Children become aware of their bodies and differences between sexes; identification with same-sex parent."
+            },
+            {
+                "stage": "Latency",
+                "age_range": [6, 12],
+                "description": "Sexual feelings are inactive; energy is directed towards social interactions and intellectual pursuits."
+            },
+            {
+                "stage": "Genital",
+                "age_range": [13, 100],
+                "description": "Maturing sexual interests; establishment of balance between various life areas."
+            }
+        ],
+        "Fowler": [
+            {
+                "stage": "Stage 0: Primal Faith",
+                "age_range": [0, 2],
+                "description": "Foundation of trust and mutuality developed through relationships with primary caregivers."
+            },
+            {
+                "stage": "Stage 1: Intuitive-Projective Faith",
+                "age_range": [3, 7],
+                "description": "Faith is imaginative and influenced by examples, stories, and images; understanding is intuitive."
+            },
+            {
+                "stage": "Stage 2: Mythic-Literal Faith",
+                "age_range": [7, 12],
+                "description": "Beliefs are literal and concrete; faith is based on experiences and narratives."
+            },
+            {
+                "stage": "Stage 3: Synthetic-Conventional Faith",
+                "age_range": [13, 18],
+                "description": "Faith is largely conformist; influenced by peers, authority figures, and societal norms."
+            },
+            {
+                "stage": "Stage 4: Individuative-Reflective Faith",
+                "age_range": [19, 40],
+                "description": "Individuals critically examine their beliefs and may become disillusioned with previous faith."
+            },
+            {
+                "stage": "Stage 5: Conjunctive Faith",
+                "age_range": [41, 65],
+                "description": "Acceptance of paradoxes and transcendence; awareness of the limitations of logic."
+            },
+            {
+                "stage": "Stage 6: Universalizing Faith",
+                "age_range": [66, 100],
+                "description": "Enlightened stage where individuals live their faith fully; focus on universal principles of compassion and love."
+            }
+        ]
+    };
+
+    function getData() {
+        const age = parseInt(document.getElementById('ageInput').value);
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = ''; // Clear previous results
+
+        if (age >= 0 && age <= 100) {
+            let output = '';
+
+            for (const [theoryName, stages] of Object.entries(data)) {
+                const stageData = stages.find(stage => age >= stage.age_range[0] && age <= stage.age_range[1]);
+
+                if (stageData) {
+                    output += `
+                        <div class="theory-section">
+                            <h2>${theoryName}</h2>
+                    `;
+
+                    if (theoryName === "Erikson") {
+                    output += `
+                        <p class="stage-title">Stage: ${stageData.stage}</p>
+                        <p><strong>Age Range:</strong> ${stageData.age_range[0]} - ${stageData.age_range[1]} years</p>
+                        <p><strong>Psychosocial Crisis:</strong> ${stageData.crisis}</p>
+                        <p><strong>Basic Virtue:</strong> <span class="virtue">${stageData.virtue}</span></p>
+                        <p><strong>Description:</strong> ${stageData.description}</p>
+                    `;
+                } else if (theoryName === "Piaget") {
+                    output += `
+                        <p class="stage-title">Stage: ${stageData.stage}</p>
+                        <p><strong>Age Range:</strong> ${stageData.age_range[0]} - ${stageData.age_range[1]} years</p>
+                        <p><strong>Description:</strong> ${stageData.description}</p>
+                    `;
+                } else if (theoryName === "Havighurst") {
+                    output += `
+                        <p class="stage-title">Stage: ${stageData.stage}</p>
+                        <p><strong>Age Range:</strong> ${stageData.age_range[0]} - ${stageData.age_range[1]} years</p>
+                        <p><strong>Developmental Tasks:</strong></p>
+                        <ul>
+                            ${stageData.tasks.map(task => `<li>${task}</li>`).join('')}
+                        </ul>
+                    `;
+                } else if (theoryName === "Kohlberg") {
+                    output += `
+                        <p class="stage-title">Level: ${stageData.level}</p>
+                        <p><strong>Stage:</strong> ${stageData.stage}</p>
+                        <p><strong>Age Range:</strong> ${stageData.age_range[0]} - ${stageData.age_range[1]} years</p>
+                        <p><strong>Description:</strong> ${stageData.description}</p>
+                    `;
+                } else if (theoryName === "Freud") {
+                    output += `
+                        <p class="stage-title">Stage: ${stageData.stage}</p>
+                        <p><strong>Age Range:</strong> ${stageData.age_range[0]} - ${stageData.age_range[1]} years</p>
+                        <p><strong>Description:</strong> ${stageData.description}</p>
+                    `;
+                } else if (theoryName === "Fowler") {
+                    output += `
+                        <p class="stage-title">Stage: ${stageData.stage}</p>
+                        <p><strong>Age Range:</strong> ${stageData.age_range[0]} - ${stageData.age_range[1]} years</p>
+                        <p><strong>Description:</strong> ${stageData.description}</p>
+                    `;
+                }
+
+                    output += `</div>`;
+                }
+            }
+
+            if (output) {
+                resultDiv.innerHTML = output;
+            } else {
+                resultDiv.innerHTML = `<p>No data available for age ${age}.</p>`;
+            }
+        } else {
+            alert("Please enter an age between 0 and 100.");
+        }
+    }
+</script>
+
+</body>
+</html>
